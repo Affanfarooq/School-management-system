@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:school_management_system/Screens/Dashboard.dart';
 import 'package:school_management_system/Screens/Parents.dart';
 import 'package:school_management_system/Screens/Students/Admit%20Student.dart';
 import 'package:school_management_system/Screens/Students/All%20Students.dart';
@@ -39,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Center(child: Text('Dashboard', style: TextStyle(fontSize: 24))),
+    Dashboard(),
     AllStudents(),
     StudentDetails(),
     AdmitStudent(),
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Row(
         children: <Widget>[
           Container(
-            width: 270,
+            width: 250,
             child: Column(
               children: <Widget>[
                 Expanded(
