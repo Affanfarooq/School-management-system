@@ -12,13 +12,13 @@ Widget textField({String? Function(String?)? validator,TextEditingController? co
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide:
-          BorderSide(color: Colors.transparent), // Border color when enabled
+          BorderSide(color: Colors.transparent),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: BorderSide(
               color: Colors.red.shade800,
-              width: 1.5), // Border color when focused
+              width: 1.5),
         ),
       ),
       validator: validator,

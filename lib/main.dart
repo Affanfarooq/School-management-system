@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     AllStudents(),
-    StudentDetails(),
+    StudentSearchScreen(),
     AdmitStudent(),
     AllTeachers(),
     TeachersDetail(),
