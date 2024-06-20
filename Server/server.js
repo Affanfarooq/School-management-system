@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 const config = {
-    user: 'sa',
+    user: 'affan',
     password: 'affan123',
     server: 'localhost',
     database: 'School_management_system',
