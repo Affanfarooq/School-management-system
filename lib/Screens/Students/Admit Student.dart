@@ -45,7 +45,7 @@ class _AdmitStudentState extends State<AdmitStudent> {
     }
   }
 
-  Future<void> sendStudentData(BuildContext context) async {
+  Future<void> saveStudentData(BuildContext context) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -768,7 +768,7 @@ class _AdmitStudentState extends State<AdmitStudent> {
                               borderRadius: BorderRadius.circular(6))),
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          sendStudentData(context);
+                          saveStudentData(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

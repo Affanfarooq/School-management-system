@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 const config = {
-    user: 'affan',
+    user: 'sa',
     password: 'affan123',
     server: 'localhost',
     database: 'School_management_system',
@@ -134,6 +134,84 @@ app.get('/students', async (req, res) => {
         res.status(200).json(result.recordset);
     } catch (err) {
         console.error('Error fetching student data:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/teachers', upload.single('image'), async (req, res) => {
+  try {
+    const pool = await poolPromise;
+    const teacherData = req.body;
+    const imagePath = req.file ? req.file.path : null; // Get the file path if it exists
+
+    // Convert comma-separated strings back to lists
+    const classes = teacherData.classes.split(',');
+    const subjects = teacherData.subjects.split(',');
+
+    const request = pool.request();
+    request.input('first_name', sql.NVarChar, teacherData.first_name);
+    request.input('last_name', sql.NVarChar, teacherData.last_name);
+    request.input('dob', sql.NVarChar, teacherData.dob); // Store dob as text
+    request.input('ID_no', sql.NVarChar, teacherData.ID_no);
+    request.input('email', sql.NVarChar, teacherData.email);
+    request.input('Cell_no', sql.NVarChar, teacherData.Cell_no);
+    request.input('address', sql.NVarChar, teacherData.address);
+    request.input('gender', sql.NVarChar, teacherData.gender);
+    request.input('classes', sql.NVarChar, classes.join(',')); // Store as comma-separated string in DB
+    request.input('subjects', sql.NVarChar, subjects.join(',')); // Store as comma-separated string in DB
+    request.input('image_path', sql.NVarChar, imagePath);
+
+    const result = await request.query(`
+      INSERT INTO Teachers (
+        first_name,
+        last_name,
+        dob,
+        ID_no,
+        email,
+        Cell_no,
+        address,
+        gender,
+        classes,
+        subjects,
+        image_path
+      ) VALUES (
+        @first_name,
+        @last_name,
+        @dob,
+        @ID_no,
+        @email,
+        @Cell_no,
+        @address,
+        @gender,
+        @classes,
+        @subjects,
+        @image_path
+      )
+    `);
+    console.log('Teacher data saved successfully.');
+    res.status(200).json({ message: 'Teacher data saved successfully.' });
+  } catch (err) {
+    console.error('Error inserting teacher data:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/teachers', async (req, res) => {
+    try {
+        const pool = await poolPromise;
+        const request = pool.request();
+        let query = 'SELECT * FROM Teachers';
+
+        // Check if there's a search query parameter
+        const searchQuery = req.query.search;
+        if (searchQuery) {
+            query += ` WHERE first_name LIKE '%${searchQuery}%' OR last_name LIKE '%${searchQuery}%'`;
+        }
+
+        const result = await request.query(query);
+        res.status(200).json(result.recordset);
+    } catch (err) {
+        console.error('Error fetching teacher data:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
